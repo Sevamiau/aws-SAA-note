@@ -1,0 +1,28 @@
+How to chooese an aws Region?
+
+things to consider.
+
+1. Compliance with data governance and legal requirements: Data never leaves a region without your explicir permission
+
+2. Proximity to customers: Reduced latency.
+
+3. Available services within a region: new services and new features arent Available en every region
+
+4. Pricing: pricing varies region to region adn is transparent in the service pricing page.
+
+
+AWS availability Zones
+
+Each region has many availabilityzones (usually3, min is 3 max is 6) Example:
+
+
+  -ap-southeast-2a
+  -ap-southeast-2b
+  -ap-southeast-2c
+
+Each availability zone (AZ) is onr or more discrete data centers with redundant power, networking and conectivity
+
+
+they are separate from each other. so tha theyare isolated form disasters
+
+theyare connected with high bandwithd ultra-low latency networking

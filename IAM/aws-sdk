@@ -1,0 +1,11 @@
+ AWS SDK
+
+-AWS Software Development Kit
+-Lenguage-specific APIs (set of libraries)
+-Enables you ti acces anda manage AWS services prgrammatically
+-Embedded within your app 
+-Supports:
+  .SDKs (js, python, php, .net, ruby, go etc)
+  .Mobile SDK (android, ios)
+  .IoT Device SDKs (Embedded, arduino)
+ -Example: AWS CLI is built on AWS SDK for Python 

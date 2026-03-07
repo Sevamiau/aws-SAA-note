@@ -1,0 +1,11 @@
+ IAM Roles for Services
+
+ -Some AWS service will need to perform actions on your behalf
+ -To do so, we will asing permissions to AWS services wit IAM Roles
+ 
+ If we creat an EC2 instance (virtual server) we will have to give it some permissions to perform some actions
+
+ -Comon Roles:
+    .EC2 instance Roles
+    .Lambda function roles
+    .Roles for cloudform

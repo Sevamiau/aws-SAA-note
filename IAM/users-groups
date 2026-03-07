@@ -1,0 +1,17 @@
+
+
+IAM: Users & Groups
+
+  IAM is a global services. You cannot choose a region for it
+
+  -IAM = indentity and acces management, global service
+  -Root account: created by default.
+  -Users are pepople within your organization, and can be gruped
+  -Groups only contain users, not other Groups
+  -User dont have to belong to a group, and users can belong to multiple groups
+
+ IAM PERSMISSIONS
+
+  -Users or groups can be assigned JSON document calle policies
+  -these policies define the permissions of the users
+  -In AWS you apply the least privilege principle: Dont give more permissions than a user needs
