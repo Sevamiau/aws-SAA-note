@@ -1,4 +1,4 @@
-# What is a DNS 
+
 
 ----------
 
@@ -22,17 +22,15 @@
 - Top Level Domain (TLD): *.com, .us, .gov, .org* ...
 - Second Level Domain (SLD): amazon.com, google.com ...
 
- **http://api.wwww.example.com.**
-    |   |   |    |       |  |__ last dot is *Root* 
-    |   |   |    |       |__ *TLD*
-    |   |   |    |__ *SLD*
-    |   |   |__ *Sub Domain*
-    |   |__ *FQDN (Fully Qualified Domain Name)*
-    |__ *Protocol*
 
-
-----------
-
-## How DNS works?
-
-
+```
+```
+http://api.wwww.example.com.
+│     │    │       │      │ └── last dot is Root
+│     │    │       │      └── TLD
+│     │    │       └── SLD
+│     │    └── Sub Domain
+│     └── FQDN (Fully Qualified Domain Name)
+└── Protocol
+```
+```
