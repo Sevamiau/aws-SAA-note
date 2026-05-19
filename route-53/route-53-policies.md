@@ -122,4 +122,106 @@ If the question mentions "Global user base," "Minimize delay," or "Improve perfo
   * AWS resources (specify AWS region)
   * Non-AWS resources (specify latitude and longitude)
 
-- You must used Route 53 advance option Traffic Flow to use this feature.  
+- You must used Route 53 advance option Traffic Flow to use this feature.
+
+----------
+
+## Routing Policies - IP based routing 
+
+If Geolocation is **"Where are you on the map?"** and Latency is **"How fast are you?"**, then **IP-Based Routing** is **"What is your exact ID?"**
+
+This is the newest routing policy (added in 2022). It allows you to take total control and tell AWS: *"If a user comes from exactly these IP addresses, send them here."*
+
+### 1. How it works (The Manual Map)
+In Geolocation, AWS "guesses" where a user is based on their IP. In **IP-Based Routing**, YOU provide the map.
+1.  You create a **CIDR Collection** (a list of IP ranges like `181.16.0.0/16` for an Argentine ISP).
+2.  You tell Route 53: *"Anyone in this collection goes to Server A."*
+3.  Anyone else (not in your list) goes to the **Default** record.
+
+### 2. Why use it? (The "Special Knowledge" Case)
+The SAA-C03 exam loves to ask why you'd pick this over the "automatic" options:
+*   **ISP Optimization:** You know that a specific internet provider in Argentina has a very expensive connection to your USA server. You use IP-based routing to force all users from that ISP to your local server in Brazil to save money.
+*   **Custom Overrides:** Sometimes AWS's Geolocation map is wrong (it thinks a user is in Chile but they are in Argentina). You can use IP-based routing to manually "fix" it for those specific users.
+*   **Internal Tools:** Routing your own office's IP range to a "Beta" version of your app while the rest of the world sees the "Production" version.
+
+---
+
+### 3. Geolocation vs. Latency vs. IP-Based
+Think of it like choosing a restaurant:
+*   **Geolocation:** "Show me restaurants in Buenos Aires." (Based on **Location**).
+*   **Latency:** "Show me the restaurant that can deliver my food the fastest." (Based on **Speed**).
+*   **IP-Based:** "If my friend 'Juan' calls, send him to my favorite grill. Everyone else goes to the pizza place." (Based on **Identity/Recognition**).
+
+---
+
+### 4. The "C" / Linux Logic: The `switch` Statement
+Think of it like a `switch` statement in C or a manually edited **Static Route** in your **MikroTik**:
+
+```c
+switch(client_ip_range) {
+    case ISP_TELECOM_AR:
+        return BRAZIL_SERVER;
+    case OFFICE_WIFI:
+        return BETA_SERVER;
+    default:
+        return USA_SERVER; // The "Default" location
+}
+```
+
+### SAA-C03 "Exam Trap":
+*   **IP-Based** is **NOT** for Private Hosted Zones (only Public).
+*   **EDNS Client Subnet (ECS):** This is a technical term you might see. It's a feature that allows Route 53 to "see" the actual user's IP even if they are using a middleman (resolver). IP-based routing uses this to be extra accurate.
+
+### Summary:
+*   **Latency:** Automatic speed (Use for general performance).
+*   **Geolocation:** Automatic location (Use for language/laws).
+*   **IP-Based:** **Manual CIDR control** (Use for ISP-specific rules or when you know your network better than AWS does).
+
+Does that clarify why we have a 3rd option? It's the "Manual Mode" for people who want to override the "Automatic" logic of AWS!
+
+- Routing is based on client's IP addresses 
+- You provied a list of CIDR's for your clients and the corresponding endpoints/locations (user-IP-to-endpoint mappings)
+- Use cases: Optimize performance, reduce network costs.
+
+- Example: Route end users form a particular ISP to a specific endpoint 
+
+----------
+
+## Routing policies - Multi-value
+
+
+### 1. The "Simple" Way (The Problem)
+Is a **Simple Routing** record, you can put multiple IP addresses in one list (e.g., `1.1.1.1`, `2.2.2.2`).
+*   **The Problem:** DNS just gives the user the whole list. DNS **does not know** if `2.2.2.2` is dead. 
+*   **The Result:** If Server B crashes, the user's browser might still try to connect to it and fail.
+
+### 2. The "Multi-Value" Way (The Solution)
+**Multi-Value Answer Routing** is like Simple Routing, but it adds **Health Checks** to every single IP.
+
+*   **The Scenario:** You have 8 web servers. You create a Multi-Value record for each one.
+*   **The Action:** Route 53 is constantly "pinging" all 8 servers.
+*   **The Result:** When a user asks for `api.example.com`, Route 53 looks at its list and says: *"Servers 1, 3, and 5 are healthy. Servers 2, 4, 6, 7, and 8 are dead. I will give the user up to 8 healthy IPs."*
+
+---
+
+### 3. How is it different from a Load Balancer?
+This is exactly what Stephane Maarek might skip:
+*   **Load Balancer:** One single IP address that manages the traffic.
+*   **Multi-Value DNS:** Returns a **list of up to 8 healthy IP addresses** directly to the user's browser. The browser then picks one to connect to.
+
+It is **Client-Side Load Balancing**. Instead of AWS doing the balancing, AWS gives the "client" (the browser) a list of healthy options and says: *"Pick one of these; they are all alive."*
+
+---
+
+### 5. Why use it? (The SAA-C03 Use Case)
+*   **Availability:** It’s a very cheap way to get basic high availability without paying for an expensive Application Load Balancer (ALB).
+*   **Low Latency:** Since there is no "middleman" (Load Balancer), the user connects directly to the server's IP.
+
+---
+
+### Comparison Summary:
+*   **Simple:** Just a list. No health checks. (If a server dies, the user gets an error).
+*   **Weighted:** You control the percentages (70/30).
+*   **Multi-Value:** Up to 8 **Healthy** IPs. Randomly selected from the pool of survivors.
+----------
+

@@ -1,8 +1,9 @@
 
+# What is DNS?
 
-----------
+---
 
-- **Domain Name System** which translates the human friendly hostnames into the machine IP adresses
+- **Domain Name System** — translates human-friendly hostnames into machine IP addresses
 - www.google.com => 172.217.18.36
 - **DNS** is the backbone of the internet
 - **DNS** uses hierarchical naming structure:

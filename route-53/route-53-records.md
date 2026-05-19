@@ -36,6 +36,6 @@
 - **Public Hosted Zones** - Contains records that specify how to route traffic on the internet (public domain names) *application1.mypublicdomain.com*
 - **Private Hosted Zones** - Contain records that specify how you route traffic within one or more VPC's (private domain names)
 
-- You par $0,50 per month per hosted zone 
+- You pay $0.50 per month per hosted zone
 
 

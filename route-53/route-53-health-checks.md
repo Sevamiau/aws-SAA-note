@@ -14,9 +14,9 @@
 
 ## Monitor and endpoint 
 
-- About L5 global health checkers will check the endpoint health
-  * Healthy/Unhealthy threshold - 3 (default)
-  * Interval - 30 sec (can set ti 19 sec 0 higher cost)
+- About 15 global health checkers will check the endpoint health
+  * Healthy/Unhealthy threshold — 3 (default)
+  * Interval — 30 sec (can set to 10 sec at higher cost)
   * Supported protocol: HTTP, HTTPS, and TCP.
   * if > 18% of health checkers report the endpoint is healthy. otherwise its Unhealthy
   * Ability to choose which locations you want Route 53 to use 
