@@ -38,6 +38,7 @@ Personal notes for the AWS Solutions Architect Associate exam.
 | [AMI Overview](EC2/AMI/AMI-overview.md) | Amazon Machine Images |
 | [Private vs Public IP](EC2/private-vs-public-ip.md) | Elastic IPs, private vs public |
 | [ENI](EC2/ENI/ENI-1.md) | Elastic Network Interfaces |
+| [Instance Metadata (IMDS)](EC2/EC2-instance-metadata.md) | 169.254.169.254, IMDSv1 vs IMDSv2, SSRF protection |
 | [Scalability & HA](EC2/scalability-high-availability.md) | Vertical vs horizontal scaling, high availability |
 
 ### EC2 Storage
@@ -146,7 +147,7 @@ Personal notes for the AWS Solutions Architect Associate exam.
 | [Overview](Elasticache/elasticache-overview.md) | Managed Redis or Memcached |
 | [DB Cache Pattern](Elasticache/elasticache-db-cache.md) | Lazy loading / cache-aside pattern |
 | [User Session Store](Elasticache/elasticache-user-session-store.md) | Stateless app session management |
-| [Redis vs Memcached](Elasticache/elasticache-redis-vs-nencached.md) | Key differences for the exam |
+| [Redis vs Memcached](Elasticache/elasticache-redis-vs-memcached.md) | Key differences for the exam |
 | [Security](Elasticache/elasticache-cache-security.md) | Redis AUTH, TLS, VPC |
 | [Patterns](Elasticache/elasticache-patterns-for-elasticache.md) | Lazy loading vs write-through |
 | [Redis Use Cases](Elasticache/elasticache-redis-use-cases.md) | Leaderboards, pub/sub, sorted sets |
@@ -159,7 +160,7 @@ Personal notes for the AWS Solutions Architect Associate exam.
 |---|---|
 | [DNS Basics](what-is-dns.md) | How DNS works, terminology |
 | [Route 53 Overview](route-53/route-53.md) | Authoritative DNS + domain registrar |
-| [Records](route-53/route-53-records.md) | A, AAAA, CNAME, NS, Hosted Zones |
+| [Records](route-53/route-53-records.md) | A, AAAA, CNAME, NS, **Alias records**, Hosted Zones |
 | [TTL](route-53/route-53-ttl.md) | High vs low TTL trade-offs |
 | [Health Checks](route-53/route-53-health-checks.md) | Endpoint, calculated, CloudWatch alarm checks |
 | [Ping Checks Comparison](route-53/route-53-ping-checks.md) | ELB vs EC2 status vs Route 53 health checks |

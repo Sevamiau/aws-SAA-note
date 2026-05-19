@@ -12,7 +12,12 @@
   * Manually triggered by the user 
   * Retention of backup for as long as you want
 
-- **TRICK**: In a stopped RDS database you will still pay for storage. If you plan on stopping it for a long time, will be convienient for you to take a snapshot and delete the original DB  restore later. The snapshot will cost way less than than the actual storage of the RDS DB.
+- **Exam trap**: a stopped RDS instance still charges you for storage. If you plan to stop it for a long time, snapshot it and delete the DB — restore from snapshot later. Snapshot storage is much cheaper than DB storage.
+
+## Automated vs Manual — when each matters
+
+- **Automated backups**: point-in-time recovery, retained up to 35 days — use for accidental data corruption or "restore to 10 minutes ago" scenarios
+- **Manual snapshots**: kept forever until you delete them — use before a risky migration or for long-term archival
 
 
 ## Aurora Backups

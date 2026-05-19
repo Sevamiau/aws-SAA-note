@@ -1,18 +1,32 @@
 # Amazon EFS - Elastic File System
 
--Managed NFS (Network File System) that can be mounted on many EC2
--EFS works with EC2 instances in multi AZ 
--Highly available, scalable and expensive (3x expensive than a gp2), pay per use.
+- Managed NFS (Network File System) — can be mounted on many EC2 instances simultaneously
+- Works across multiple AZs in the same region
+- Highly available, scalable
+- **Linux only** (POSIX/NFS) — not compatible with Windows
+- Uses NFSv4.1 protocol
+- Access controlled via security groups
+- Encryption at rest using KMS
+- Scales automatically — pay per GB used (no need to provision size upfront)
+- More expensive than EBS gp2 (roughly 3x)
 
--Use cases:
-    .Content management, web serving, data sharing, Wordpress.
--Uses NFSv4.1 protocol
--Uses security group to control access to EFS
--Compatible with Linux based AMI only (not win)
--Encryption at res using KMS
+---
 
--POSIX file System (~Linux) that has a standard file API 
--File System scales automatically. pay per use for each GiB of data you use.
+## When to use EFS
 
+Use EFS when multiple instances need to share the same files at the same time:
+- WordPress or web servers in an ASG all serving the same content
+- Shared configuration files across instances
+- Content management systems
+- Any "shared file system" scenario
 
+If only one instance needs the storage → use EBS (cheaper).
 
+---
+
+## Exam trap
+
+- "Shared file storage across multiple EC2 instances" → EFS
+- "Windows EC2 instances need shared storage" → EFS is wrong (Linux only) → use FSx for Windows
+- EFS scales automatically — you never provision a size, you pay for what you use
+- EFS is more expensive than EBS but you only pay for actual usage, not provisioned capacity

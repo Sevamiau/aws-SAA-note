@@ -1,91 +1,71 @@
-# EC2 instances purchasing options
+# EC2 Instance Purchasing Options
 
-- On-demand instances: Short workload, predictable pricing, pay by second
-- Reserved: (1, 3 years)
-    .Reserved instances-long workloads
-    .Convertible Reserved instances-long workloads with flexible instances
--Saving Plans (1, 3 years): Commitment to an amount of usage, long workload
--Spot instances: Short workloads, cheap, can lose instances(less reliable)
--Dedicated Hosts: book an entire physical server, control instance placement
--Dedicated instances: No other customers will share your hardware
--Capacity reservations: reserve capacity in a specific AZ for any duration
+| Option | Commitment | Discount | Use when |
+|---|---|---|---|
+| On-Demand | None | None | Short-term, unpredictable workload |
+| Reserved | 1 or 3 years | Up to 72% | Steady-state app (e.g. database always running) |
+| Savings Plans | 1 or 3 years | Up to 72% | Same as Reserved but more flexible (any instance size/OS) |
+| Spot | None | Up to 90% | Fault-tolerant batch jobs, can be interrupted |
+| Dedicated Host | On-demand or 1/3 yr | - | Compliance needs or BYOL (bring your own license) |
+| Dedicated Instance | None | - | Need hardware isolation but don't need full host control |
+| Capacity Reservation | None | None | Need guaranteed capacity in a specific AZ |
 
-# EC2 On-demand
+---
 
--Pay for what you use:    
-    .Linux or win: billing per second, after the first minute
-    .All other operating systems: billing per hour
--Has the highest cost but no upfront payment
--No long-term Commitment
+## On-Demand
 
--Recommended for short-term and un-interrupted workloads where you cant predcit how the app will behave
+- Pay for what you use
+  - Linux/Windows: billing per second after the first minute
+  - Other OS: billing per hour
+- Highest cost, no upfront payment, no commitment
+- Use for short-term or unpredictable workloads
 
-# EC2 Reserved instances
+## Reserved Instances
 
--Up to 72% discount compared to On-demand
--You Reserve a specific instance attributes (instance type, tenancy, OS)
--Reservation period: 1 year(+discount) or 3 years(+++discount)
--payment options: no upfront(+), partial upfront(++), all upfront(+++)
--Reserved instance scope-Regional or Zonal(reserve capacity in an AZ)
--Recommended for steady-state usage apps(Thing database)
--You can buy and sell in the Reserved instance Marketplace
+- Up to 72% discount vs On-Demand
+- Reserve specific instance attributes (type, region, OS, tenancy)
+- Term: 1 year or 3 years
+- Payment: no upfront / partial upfront / all upfront (more upfront = more discount)
+- Scope: Regional or Zonal (zonal also reserves capacity in that AZ)
+- You can buy and sell Reserved Instances in the Marketplace
 
--Convertible Reserved instance
-    .Can change the EC2 instance type, instance family, OS, scope and tenancy.
-    .Up to %66 discount
+**Convertible Reserved Instance**: can change instance type, family, OS, scope, tenancy — up to 66% discount
 
-# EC2 Saving Plans
+**Exam trap**: Reserved = commit to a specific instance type. Savings Plans = commit to a dollar amount per hour, more flexible.
 
--Get a discount base on long-term usage (up to 72%0 sane as RI)
--Commit to a certain type of usage ($10/hour for 1 or 3 years)
--Use beyond EC2 Saving Plans is billed at the On-demand price 
+## Savings Plans
 
--Locked to a specific instance family & AWS region (eg. M5 in us-east-1)
--flexible across:
-    .Instance size(eg. m5.xlarge, m5.2xlarge)
-    .OS(eg. linux or win)
-    .Tenancy(Host, Dedicated, Default)
+- Commit to a dollar amount per hour (e.g. $10/hr) for 1 or 3 years
+- Same 72% discount as Reserved
+- Flexible across instance size, OS, and tenancy within the committed family and region
+- Usage beyond the commitment is billed at On-Demand rates
 
-# EC2 Spot Instances
+## Spot Instances
 
--Can get a discount of up to 90% compared to On-demand
--Instances that you can 'loose' at any point of time if tour mas price is less than the current spot price
--The MOST cost-efficient instances in AWS
+- Up to 90% discount — cheapest option
+- AWS can reclaim the instance with 2-minute warning if spot price exceeds your max bid
+- **Not for**: databases, critical jobs, anything stateful
+- **Good for**: batch processing, data analysis, image processing, distributed/fault-tolerant workloads
 
--Useful for workloads that are resilient to failure:
-    .Batch jobs
-    .Data analysis
-    .Image processing
-    .Any distributed workloads
-    .workloads with a flexible start and end time
+## Dedicated Hosts
 
-NOT SUITED FOR CRITICAL JOBS OR DATABASES
+- Full physical server reserved for you
+- Lets you use existing per-socket/per-core software licenses (BYOL)
+- Most expensive option
+- Required for strong compliance or regulatory needs
 
-# EC2 Dedicated Hosts
+## Dedicated Instances
 
--A physical server with EC2 instance capacity fully Dedicated to your use
--Allows you address compliance requirements and use your existing server-bound software licenses(per-socket, per-core, per VM software licenses)
--purchasing options:
-    .On-demand-pay per-second for active Dedicated Host
-    .Reserved- 1 or 3 years(no upfront, partial upfront or all upfront)
--The most expensive option 
+- Instances run on hardware dedicated to your account
+- May share hardware with other instances in the same account
+- No control over placement — differs from Dedicated Host
 
--Useful for software that have complicated licensing mode (BYOL- Bring your own license)
--Or for companies that have strong regulatory or compliances needs 
+**Dedicated Host vs Dedicated Instance**: Host gives you visibility and control over the physical server (needed for BYOL). Instance just guarantees no other AWS customer shares your hardware.
 
-# EC2 Dedicated Instances
+## Capacity Reservations
 
--Instances run on hardware that is dedicated to you
--May share hardware with other instances in same account
--No control over instance placement(can move hardware after stop/start)
-
-
-# EC2 Capacity reservations
-
--Reserve On-demand instances capacity in a specific AZ for any duration
--You always have access to EC2 capacity when you need it 
--No time Commitment(create/cancel anytime), no billing discounts 
--Combine with regional reserved instances and saving plans to benefit from billing discounts 
--You are charged at On-demand rat whether you run instances or not
-
--Suitable for short-term un-interrupted workloads that needs to e in a specific AZ
+- Reserve On-Demand capacity in a specific AZ for any duration
+- No time commitment, no billing discount
+- You pay the On-Demand rate whether you use the capacity or not
+- Combine with Reserved Instances or Savings Plans for discounts
+- Use when you need guaranteed capacity available in a specific AZ for a short-term critical event

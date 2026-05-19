@@ -25,9 +25,32 @@
   * Cant create a CNAME record for the top node of a DNS namespace (zone apex)
   * Example: You cant create for example.com but you can create for www.example.com
 
-- **NS** - Name Servers for the Hosted Zone 
+- **NS** - Name Servers for the Hosted Zone
 
-----------
+---
+
+## Alias Records
+
+- AWS-specific extension to DNS — not part of the standard DNS spec
+- Maps a hostname to an **AWS resource** (ALB, CloudFront, S3 website endpoint, API Gateway, Elastic Beanstalk, VPC endpoints, Global Accelerator, another Route 53 record)
+- Works like an A record but the target is an AWS resource, not a raw IP
+
+### Alias vs CNAME
+
+| | CNAME | Alias |
+|---|---|---|
+| Zone apex (`example.com`) | ❌ Not allowed | ✅ Allowed |
+| Target | Any hostname | AWS resources only |
+| Cost | Charged per query | **Free** |
+| TTL | You set it | Managed by Route 53 |
+| Health checks | No (indirectly) | Yes (for some targets) |
+
+### Exam trap
+- "How do you point `example.com` (root domain) to an ALB?" → **Alias record**, not CNAME
+- You **cannot** set an Alias record for an EC2 DNS name — only the resource types listed above
+- Alias records are always of type **A** or **AAAA** (not a separate record type)
+
+---
 
 ## Hosted Zones 
 

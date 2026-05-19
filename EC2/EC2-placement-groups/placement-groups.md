@@ -1,43 +1,44 @@
-# Placement Groups
+# EC2 Placement Groups
 
--Sometimes you want control over the EC2 instance placement strategy
--That strategy can be defined using placement Groups
--When you create a placement group you specify one of the following strategies for the group:
-    .Cluster: Cluster instances into a low-latency group in a single Availability Zone
-    .Spread: Spreads instances across underlying hardware(max 7 instances per group per AZ)
-    .Partition: Spreads instances across many different partitions (which rely on different sets of racks) within an AZ. Scales to 100s of EC2 instances per group (Hadoop, Cassandra, Kafka)
+Control over how EC2 instances are physically placed within AWS infrastructure.
 
-# Placement Groups Clusters (low-latency, 10Gbps network)
+## Quick decision table
 
--Pros: Great network (10Gbps bandwidth between instances with Enhanced Network enabled(recommended))
--Cons: If the AZ fails, all instances fails at the same time
--Use case:
-    .Big Data job that needs to complete fast
-    .Application that needs extremely low low-latency and high network throughput
+| Strategy | Hardware | AZ scope | Pick this when |
+|---|---|---|---|
+| Cluster | Same rack, same AZ | Single AZ | Need maximum network speed between instances |
+| Spread | Different racks | Multi-AZ | Need to isolate instances from each other's failures |
+| Partition | Different racks per partition | Multi-AZ | Large distributed systems (Hadoop, Kafka, Cassandra) |
 
+---
 
-# Placement Groups Spread
+## Cluster
 
--Pros: 
-    .Can span across AZ
-    .Reduced risk of simultaneous failure
-    .EC2 instances are on different physical hardware
+- All instances on the same rack in the same AZ
+- Pros: 10 Gbps network between instances (with Enhanced Networking)
+- Cons: if the AZ or rack fails, all instances fail at once
+- Use for: HPC, Big Data jobs that need to finish fast, extremely low latency + high throughput
 
-Cons:
-    .Limited to 7 instances per AZ per placement group
+## Spread
 
-Use case:
-    .Application that needs to maximize high Availability
-    .Critical Application where each instance must be isolated from failure from each other
+- Each instance on a separate physical rack
+- Max 7 instances per AZ per placement group
+- Pros: maximizes availability — a rack failure only takes down 1 instance
+- Use for: small number of critical instances that must be isolated from each other
 
-# Placement Groups Partition:
+## Partition
 
--Up to 7 partitions per AZ
--Can span across multiple AZ's in the same region
--Up to 100's of EC2 instances
--The instances in a partition do not share racks with the instances in the other partitions 
--A partition failure can affect many EC2 but wont affect other partitions
--EC2 instances get acces to the partition info as metadata
+- Instances divided into partitions — each partition uses a different rack
+- Up to 7 partitions per AZ, hundreds of EC2 instances total
+- A partition failure affects only instances in that partition
+- Instances can see which partition they are in (via metadata)
+- Use for: distributed big data systems — HDFS, HBase, Cassandra, Kafka
 
--Use cases:
-    .HDFS, HBase, Cassandra, Kafka.
+---
+
+## Exam trap
+
+- "Low latency between instances" → Cluster
+- "Isolate each instance from hardware failure" → Spread
+- "Large-scale distributed system like Kafka or HDFS" → Partition
+- Spread has a hard limit of 7 instances per AZ — if the question describes more than 7, Spread won't work

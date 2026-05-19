@@ -1,31 +1,43 @@
 # Amazon RDS Overview
 
-----------
+- RDS = Relational Database Service
+- Managed DB service — uses SQL as the query language
+- Supported engines:
+  - PostgreSQL
+  - MySQL
+  - MariaDB
+  - Oracle
+  - Microsoft SQL Server
+  - IBM DB2
+  - Aurora (AWS proprietary)
 
-- RDS stands for Relational Database Service
-- Its a managed DB service for DB uses SQL as a query lenguage
-- It allows you to create databases in the cloud that are managed by AWS 
-  * Postgres
-  * MySQL
-  * MariaDB
-  * Oracle
-  * Microsoft SQL Server
-  * IBM DB2
-  * Aurora (Aws Propietary Database)
+---
 
-  ----------
-# Advantage over using RDS versus deploying DB on EC2
+## RDS vs self-managing a DB on EC2
 
-- RDS is a manged service:
-  * Automated provisioning, OS patching
-  *Continuous backups and restore to specific timestamp (point in time restore)
-  * Monitoring dashboards
-  * Read replicas for improved read performance 
-  * Multi AZ setup for DR (Disaster Recovery)
-  * Maintenance windows for upgrades
-  * Scaling capability (vertical and horizontal)
-  * Storage backed by EBS 
+| | RDS (managed) | DB on EC2 |
+|---|---|---|
+| OS patching | AWS handles it | You handle it |
+| Backups | Automated | Manual |
+| Multi-AZ / HA | Built-in option | You build it |
+| Read replicas | Built-in option | You build it |
+| SSH access | No | Yes |
+| Cost | Higher | Lower (but more work) |
 
-- **BUT** you cant SSH into your instances
+**Exam trap**: "You need to SSH into the database OS" or "install a custom DB plugin" → you cannot do this on RDS → use RDS Custom or run DB on EC2.
 
+RDS is the right answer unless the question explicitly needs OS-level access.
 
+---
+
+## RDS managed benefits
+
+- Automated provisioning and OS patching
+- Continuous backups with point-in-time restore (up to 35 days)
+- Monitoring dashboards
+- Read replicas for improved read performance
+- Multi-AZ for disaster recovery
+- Maintenance windows for upgrades
+- Vertical and horizontal scaling
+- Storage backed by EBS
+- **You cannot SSH into RDS instances**

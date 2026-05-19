@@ -1,55 +1,65 @@
 # EBS Volume Types
 
--EBS Volumes com in 6 types:
-    .gp2/gp3 (SSD): General purpose SSD Volume that balances price and performance for a wide variety of workloads
-    .io1/ io2 Block Express (SSD): Highest-Performance SSD volume for mission-critical low-latency or high-troughput workloads
-    .st 1 (HDD): Low cost HDD volume designed for frequently accessed, throughput intensive workloads 
-    .sc 1 (HDD): Lowest cost HDD volume desgned for less frequently accessed workloads
+Only **gp2/gp3** and **io1/io2** can be used as boot volumes.
 
--EBS Volumes are characterized in Size / throughput / IOPS (I/O per sec)
--When in doubt always consult the AWS doc 
--Only gp2/gp3 and io1/io2 Block Express can be used as boot Volumes
+## Quick decision table
 
+| Type | Category | Pick this when |
+|---|---|---|
+| gp3 | SSD | Default choice for most workloads |
+| gp2 | SSD | Legacy — prefer gp3 for new volumes |
+| io2 Block Express | SSD | Database needing > 16,000 IOPS or sub-ms latency |
+| io1 | SSD | Database needing > 16,000 IOPS (older option) |
+| st1 | HDD | Big Data, logs, data warehouses — high throughput, low cost |
+| sc1 | HDD | Infrequently accessed data — lowest cost possible |
 
-# EBS Volume Types use cases
+**Exam trap**: if the question says "lowest cost" and the data is rarely accessed → sc1. If it says "high throughput for sequential reads" → st1. If it says "boot volume" → only SSD types (gp or io).
 
--Cost effective storage, low-latency
--System boot Volumes, virtual desktops, development and test environments
-- 1 GiB up to 16TiB
--gp3:
-    .Baseline of 3000 IOPS and throughput of 125 MiB/sec
-    .Can increase IOPS up tu 16,000 and throughput up to 1000 MiB/sec independently
+---
 
--gp2:
-    .Small gp2 Volumes can burst IOPS to 3000
-    .Size of the volume and IOPS are linked, mas IOPS us 16,000
-    .3 IOPS per GiB, means at 5,334 GiB we are at the max IOPS
+## General Purpose SSD (gp2 / gp3)
 
-## Provisioned IOPS (PIOPS) SSD
+- Cost-effective, low-latency
+- Used for: system boot volumes, virtual desktops, dev/test environments
+- Size: 1 GiB to 16 TiB
 
--Critical Business app with sustained IOPS performance
--Or apps that need more than 16,000 IOPS
--Great for databases workloads(sensitive to storage perf and consistency)
+**gp3** (prefer this):
+- Baseline: 3,000 IOPS and 125 MiB/s throughput
+- Can scale IOPS up to 16,000 and throughput up to 1,000 MiB/s independently
 
--io 1 (4GiB - 15Tib):
-    .Max PIOPS: 64,000 for Nitro EC2 instances & 32,000 for other
-    .Can increase PIOPS independently from storage Size
--io 2 Block Express (4 GiB - 64 TiB):
-    .Sub-milisecond latency 
-    .Max PIOPS: 256,000 with an IOPS:GiB ratio of 1000:1 
-Support EBS Multi-attach
+**gp2** (legacy):
+- IOPS linked to size: 3 IOPS per GiB, max 16,000 IOPS (reached at 5,334 GiB)
+- Small volumes can burst to 3,000 IOPS
 
-## Hard Disk Drives (HHD)
+---
 
--Cannot be a boot volume
--125 GiB to 16TiB
--throughput optimized HHD (stl)
-    .Big Data, Data Warehouses, log procesing
-    .Max throughput 500 MiB/s - mas IOPS 500
+## Provisioned IOPS SSD (io1 / io2)
 
--Cold HHD (scl):
-    .For data that is infrequently accessed
-    .Scenarios where lowest cost is important 
-    .Max throughput 250 MiB/s - max IOPS 250
+- For critical workloads that need sustained IOPS or more than 16,000 IOPS
+- The only types that support **EBS Multi-Attach**
 
+**io1** (4 GiB - 16 TiB):
+- Max 64,000 IOPS on Nitro instances, 32,000 on others
+- IOPS configurable independently from size
 
+**io2 Block Express** (4 GiB - 64 TiB):
+- Sub-millisecond latency
+- Max 256,000 IOPS with IOPS:GiB ratio of 1,000:1
+- Best choice when you need maximum performance
+
+---
+
+## Hard Disk Drives (HDD)
+
+- Cannot be a boot volume
+- Size: 125 GiB to 16 TiB
+
+**st1 - Throughput Optimized**:
+- For frequently accessed, throughput-intensive workloads
+- Use cases: Big Data, data warehouses, log processing
+- Max throughput: 500 MiB/s, max IOPS: 500
+
+**sc1 - Cold HDD**:
+- For infrequently accessed data
+- Lowest cost EBS option
+- Max throughput: 250 MiB/s, max IOPS: 250
