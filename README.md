@@ -2,6 +2,8 @@
 
 Personal notes for the AWS Solutions Architect Associate exam.
 
+**[STUDY-GUIDE.md](STUDY-GUIDE.md)** — complete, readable book compiled from all notes below. Start here for review.
+
 ---
 
 ## IAM — Identity & Access Management
