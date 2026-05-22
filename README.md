@@ -179,7 +179,10 @@ Personal notes for the AWS Solutions Architect Associate exam.
 | [S3 Introduction](S3/s3-intro.md) | Overview, key concepts, durability |
 | [Buckets](S3/s3-buckets.md) | Bucket naming, regions, global namespace |
 | [Objects](S3/s3-objects.md) | Keys, size limits, metadata, versioning |
+| [Versioning](S3/s3-versioning.md) | Bucket-level versioning, version IDs, delete markers |
 | [Security](S3/s3-security.md) | IAM policies, bucket policies, ACLs, encryption |
+| [Replication](S3/s3-replication.md) | CRR (cross-region) and SRR (same-region) replication |
+| [Storage Classes](S3/s3-storage-class.md) | Standard, IA, Glacier, Intelligent-Tiering, Lifecycle |
 | [Use Cases](S3/s3-use-cases.md) | When S3 is the right answer |
 
 ---
