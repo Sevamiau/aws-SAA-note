@@ -183,7 +183,17 @@ Personal notes for the AWS Solutions Architect Associate exam.
 | [Security](S3/s3-security.md) | IAM policies, bucket policies, ACLs, encryption |
 | [Replication](S3/s3-replication.md) | CRR (cross-region) and SRR (same-region) replication |
 | [Storage Classes](S3/s3-storage-class.md) | Standard, IA, Glacier, Intelligent-Tiering, Lifecycle |
+| [Express One Zone Class](S3/s3-express-one-zone-class.md) | High-performance single-AZ class, Directory Buckets |
 | [Use Cases](S3/s3-use-cases.md) | When S3 is the right answer |
+
+### S3 Advanced
+
+| File | Topic |
+|---|---|
+| [Moving Between Storage Classes](S3/S3-advanced/s3-moving-between-storage-classes.md) | Transition rules, when to use Standard IA vs Glacier |
+| [Lifecycle Rules](S3/S3-advanced/s3-lifecycle-rules.md) | Transition and expiration actions, prefix/tag filters |
+| [S3 Analytics](S3/S3-advanced/s3-analytics.md) | Storage class analysis, when to transition objects |
+| [Requester Pays](S3/S3-advanced/s3-requester-pays.md) | Shift data transfer costs to the requester |
 
 ---
 
