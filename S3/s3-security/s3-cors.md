@@ -60,4 +60,5 @@ Three things must match exactly: **Protocol** (http vs https), **Host** (domain)
 *   If a **Browser** (user) is pulling data from S3 while visiting another site, you use **CORS**.
 
 
-(./images/WhatsApp Image 2026-05-24 at 3.46.09 PM.jpeg)
+
+![Cors example](./images/WhatsApp Image 2026-05-24 at 3.46.09 PM.jpeg)
