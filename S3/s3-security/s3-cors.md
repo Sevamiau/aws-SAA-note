@@ -61,4 +61,4 @@ Three things must match exactly: **Protocol** (http vs https), **Host** (domain)
 
 
 
-![Cors example](./images/WhatsApp Image 2026-05-24 at 3.46.09 PM.jpeg)
+![Cors example](/images/WhatsApp Image 2026-05-24 at 3.46.09 PM.jpeg)
