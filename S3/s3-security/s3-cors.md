@@ -61,4 +61,4 @@ Three things must match exactly: **Protocol** (http vs https), **Host** (domain)
 
 
 
-![Cors example](/images/cors.png)
+![Cors example](./images/cors.png)
