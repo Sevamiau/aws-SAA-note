@@ -69,3 +69,37 @@ In standard SNS/SQS, messages can occasionally arrive out of order. In **FIFO**,
 
 ---
 
+
+### SNS - Message Filtering 
+
+
+### **SNS Message Filtering (The "Selective Listener")**
+
+*   **The Concept:** A subscriber (like an SQS Queue) can set a **JSON Filter Policy**. SNS will then check the **Attributes** (metadata) of a message and only "push" it to that subscriber if it matches the criteria.
+*   **The Mechanism:**
+    1.  **Publisher (Buying Service):** Sends a message AND attaches **Message Attributes** (e.g., `State: Placed` or `State: Cancelled`).
+    2.  **SNS Topic:** Receives the message and looks at the attributes.
+    3.  **The Filter:** SNS compares the attributes against the Filter Policy on each subscription.
+    4.  **Delivery:**
+        *   If it matches $\rightarrow$ Message is delivered.
+        *   If it doesn't match $\rightarrow$ Message is dropped for that specific subscriber.
+        *   **No Policy?** $\rightarrow$ If a subscription has no filter, it receives **every** message by default (like the "SQS Queue (All)" at the bottom of the image).
+
+---
+
+### **Exam Summary for your notes:**
+
+| Feature | SNS Message Filtering |
+| :--- | :--- |
+| **Logic Location** | Defined on the **Subscription**, not the Topic. |
+| **Format** | **JSON Policy**. |
+| **Benefit** | **Efficiency.** The Consumer (SQS/Lambda) doesn't waste CPU/money processing or deleting messages it doesn't need. |
+| **Trigger Words** | "Filter messages based on attributes," "Subscriber only needs a subset of data." |
+
+---
+
+Think of this like **`grep`** for your messages.
+*   **SNS Topic:** A stream of logs.
+*   **Filter Policy:** `grep "ERROR"` or `grep "CANCELLED"`. 
+*   Instead of your application reading the whole log file and searching for the word, SNS only hands you the lines you actually asked for.
+
