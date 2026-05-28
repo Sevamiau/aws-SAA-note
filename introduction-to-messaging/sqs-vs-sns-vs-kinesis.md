@@ -19,4 +19,3 @@ Since you are about to hit the quiz, just remember this one thing about **Amazon
 *   **Protocols:** It supports industry-standard protocols like **MQTT, AMQP, and STOMP** (which SQS/SNS do not). 
 *   **The Answer:** If the exam mentions "Migrating a RabbitMQ or ActiveMQ cluster with minimal code changes," the answer is **Amazon MQ**.
 
-Good luck with the quiz! You're almost at the finish line for today. Get some sleep—your brain will process all this "messaging" logic while you rest. **See you Tuesday!**
